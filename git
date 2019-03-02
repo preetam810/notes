@@ -1,0 +1,91 @@
+Git:
+
+- Git stores data more like a stream of snapshots. Every time you commit, or save the state of your project, 
+Git basically takes a picture of what all your files look like at that moment and stores a reference to that snapshot.
+- Other VCS store delta
+
+Config:
+git config --global user.name "Preetam Bankhele"
+git config --global user.email "preetam810@gmail.com"
+git config --list
+
+
+Setting are stored in .gitconfig in home directory
+
+
+Basic Git Commands:
+- clone, status, add, commit, init, push, pull, checkout, branch, log, diff, merge, remote
+
+git clone https://github.com/preetam810/gittest.git
+ 
+git status
+o/p:
+On branch master  << shows the current branch
+Your branch is up to date with 'origin/master'. << shows branch is up to date with master and created a remote repository reference called "origin"
+
+nothing to commit, working tree clean 
+
+
+git add <file> : adds a file from working/untracked area to staging/tracked area
+
+git commit -m "Modified Read me"
+git commit -am "Modified Read me" << add and commit together
+
+git commit --amend
+
+git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit. << One commited change needs to be pushed to remote repo
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean << nothing to commit from staging area to local repo
+
+
+git push origin master
+
+git branch: shows the current branch
+
+
+git init: initializes the current directory as new git working repository. Creates a .git folder
+
+git ls-files : gives list of all files git is tracking in current dir.
+
+git checkout <file> : discard changes done in working directory and restore to the last commited file
+
+git reset HEAD <file> : to unstage file
+
+git pull : Will pull down from a remote
+
+git add -A
+
+
+___
+
+https://blog.mikepearce.net/2010/05/18/the-difference-between-git-pull-git-fetch-and-git-clone-and-git-rebase/
+___
+
+Git stages:
+Local
+- Working directory: unstracked files, git status
+- Staging area: tracked files, git add 
+- Repository : local commits, git commit -m
+
+Remote
+Files pushed to remote, git push remote master
+
+
+git rm : delete tracked file
+
+git branch
+git branch -a
+git checkout <branch>
+git diff master <new_branch>
+git branch -d <branch> : delete local branch
+git branch -d origin <branch> : delete remote branch
+git merge master <branch>
+
+
+git log
+git log --oneline --decorate
+
+
