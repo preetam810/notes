@@ -1,0 +1,83 @@
+What is Kubernetes? What problems does it solve?
+
+Kubernetes is a container orchestration technology used to orchestrate deployment of 100s to 1000s of containers in clustered environment.
+When applications are packages into docker containers, to run then in production we need to solve problems like
+- networking of multiple containers
+- scaling of application when number of users increase and scale down when users decrease
+- traffic should be load balanced within seconds at service level
+- application should be highly available. Hardware failures should not bring application down
+
+To enable these functionalities you need an underlying platform with a set of resources. 
+This whole process of automatically deploying and managing containers is known as Container Orchestration.
+All this is done with a set of declarative object configuraton file.
+
+
+Nodes:
+A node is a worker machine and this is were containers will be launched by kubernetes. 
+
+Cluster:
+To make your application highly available and to balance load, you need more than one node.
+CLuster is a set of nodes grouped together.
+
+Master:
+Master is also a node configred as master and watches over other nodes in a cluster. Master is reponsible for orchestration of containers on nodes.
+
+
+Components installed:
+Master:
+1. API server
+2. etcd service
+3. controllers 
+4. schedulers
+
+Worker Node:
+1. kubelet service
+2. container runtime
+
+
+API Server: acts as the front-end. The users, management devices, Command line interfaces all talk to the API server to interact with the kubernetes
+cluster.
+
+etcd service: is key value store used to store all data used to manage a cluster. etcd stores all information about all nodes in the cluster. 
+
+schedulers: The scheduler is responsible for distributing work or containers across multiple nodes.
+
+controllers: Controllers are the brain behind orchestration. They are reponsible for taking action when nodes, containers, endpoint goes down.
+
+container runtime: Underlying software that is used to run containers, Eg: Docker, rocket etc
+
+kublet service: Agent that runs on each node in a cluster and is reponsible for making sure containers are running as expected.
+
+
+kubectl: command line tool used to deploy and manage applications on a kubernetes cluster, to get cluster information, get the status of nodes in the cluster 
+and many other things.
+
+
+#kubectl run hello-minikube
+Used to deploy an application on the cluster
+
+#kubectl cluster-info
+Used to view information about the cluster
+
+#kubectl get nodes
+used to list all the nodes part of the cluster
+
+
+Kubernetes Objects:
+1. Pods
+2. Services
+3. Replica sets
+4. Deployments
+
+Pods:
+The containers are encapsulated into a Kubernetes object known as PODs. A POD is a single instance of an application. A POD is the smallest
+object, that you can create in kubernetes.
+PODs usually have a one-to-one relationship with containers running your application. PODs can have multiple containers of diferent type
+To scale UP you create new PODs and to scale down you delete PODs. You do not add additional containers to an existing POD to scale your application.
+Each POD gets its own IP address.
+
+#kubectl get pods -o wide
+show IP of the pod and the node on which the pod is deployed
+
+
+
