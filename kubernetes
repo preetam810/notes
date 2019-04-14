@@ -79,5 +79,10 @@ Each POD gets its own IP address.
 #kubectl get pods -o wide
 show IP of the pod and the node on which the pod is deployed
 
+Replica sets:
+
+Deployments:
+
+
 
 

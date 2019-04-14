@@ -1,5 +1,5 @@
 
-Common docker commands for reference:
+Common docker container commands for reference:
 
 Jenkins:
 docker run -u root --rm -d --name jenkins-pb -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock jenkinsci/blueocean
@@ -8,3 +8,31 @@ Nexus:
 docker run --rm -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
 
 docker run --rm -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data -e INSTALL4J_ADD_VM_PARAMS="-Xms2g -Xmx2g -XX:MaxDirectMemorySize=1g  -Djava.util.prefs.userRoot=/some-other-dir" sonatype/nexus3
+____________________
+
+What is Docker and what is its use?
+What is a container?
+How can container be used in devops?
+
+
+Docker commands:
+docker save
+docker load
+docker images --tree
+docker top
+docker ps, docker ps -a
+docker inspect
+docker attach : to attach a docker container, we need a shell running in the container as PID1. ie. /bin/bash
+ctrl+p+q : exit from container (detach)
+docker stop <id> : sends system signal to PID 1 of process running inside container
+docker ps -l : shows last run container
+docker restart
+docker info: shows count of containers & images stored locally on host
+ls -l /var/lib/docker/containers : location of containers
+docker rm : remove container
+docker history <id> : shows the commands run to create the docker image
+docker logs -f
+docker-enter <id> : Enter inside a container. Exit will quit.
+docker exec -it <id> /bin/bash : Execute a bash terminal inside a container (recommended)
+
+
