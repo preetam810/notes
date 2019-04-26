@@ -4,6 +4,20 @@ Git:
 Git basically takes a picture of what all your files look like at that moment and stores a reference to that snapshot.
 - Other VCS store delta.
 
+Why Git?
+Biggest advantage of git is its branching capabilities. Unlike centralized VCS git branches are easy to make and merge
+Hence good for agile
+In SVN, each developer gets a working copy that points back to a single central repository. Git, however, is a distributed version control system. Instead of a working copy, each developer gets their own local repository, complete with a full history of commits.
+Hence this makes Git fast(performance) and work can be done without network connection.
+Most operations are local
+New branches can be created and destroyed for expirementation 
+Large community 
+
+
+
+
+
+
 Config:
 git config --global user.name "Preetam Bankhele"
 git config --global user.email "preetam810@gmail.com"
@@ -68,7 +82,7 @@ Git stages:
 Local
 - Working directory: unstracked files, git status
 - Staging area: tracked files, git add 
-- Repository : local commits, git commit -m
+- Commit : local commits, git commit -m
 
 Remote
 Files pushed to remote, git push remote master
