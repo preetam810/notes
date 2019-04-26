@@ -54,6 +54,7 @@ and many other things.
 
 
 #kubectl run hello-minikube
+#kubectl run nginx --image nginx
 Used to deploy an application on the cluster
 
 #kubectl cluster-info
@@ -61,6 +62,21 @@ Used to view information about the cluster
 
 #kubectl get nodes
 used to list all the nodes part of the cluster
+
+#kubectl get pods
+
+#kubectl get pods -o wide
+show IP of the pod and the node on which the pod is deployed
+
+#kubectl get all
+
+#kubectl create -f pod-definition.yml
+
+#kubectl replace -f replicaset-definition.yml
+
+#kubectl delete pod myapp
+
+#kubectl delete replicaset myapp-rc
 
 
 Kubernetes Objects:
@@ -76,12 +92,53 @@ PODs usually have a one-to-one relationship with containers running your applica
 To scale UP you create new PODs and to scale down you delete PODs. You do not add additional containers to an existing POD to scale your application.
 Each POD gets its own IP address.
 
-#kubectl get pods -o wide
-show IP of the pod and the node on which the pod is deployed
 
-Replica sets:
+
+Replication controllers and Replica sets: 
+They are the brain behind kubernetes. They monitor kubernetes objects and act accordingly. Multiple 
+Pods can be created to share load.
+Difference between Replication conterllers and Replica sets: Replica sets contain selectors.
+
 
 Deployments:
+Used for rollout upgrade. Rollout is a process of gradually deploying or upgrading a container.
+Container version can be upgraded or made to roll back.
+Creation of deployment triggers rollout. New rollout creates new Deployment revision.
+This enables us to roll back to previous version of deployment if necessary.
+
+#kubectl create -f deployment-definition.yml
+creates deployments, replicasets and Pods.
+
+#kubectl get deployments
+
+#kubectl describe deployment
+
+#kubectl rollout status deployment/myapp-deployment
+shows status of rollout
+
+#kubectl rollout history deployment/myapp-deployment
+shows revision and history of roll out
+
+#kubectl apply -f deployment-definition.yml
+A new rollout is triggered and a new revision of the deployment is created.
+
+#kubectl rollout undo deployment/myapp-deployment
+This will then destroy the PODs in the new replicaset and bring the older ones up in the old replicaset.
+
+
+
+
+
+
+YAML in Kubernetes:
+
+Required fields:
+apiversion
+kind
+metadata
+    name
+    lables
+spec
 
 
 

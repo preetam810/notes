@@ -12,7 +12,9 @@ ____________________
 
 What is Docker and what is its use?
 What is a container?
-How can container be used in devops?
+Whats the difference between a VM and a container.
+How can container be used in devops? Whtat problems does it solve.
+
 
 
 Docker commands:
@@ -34,5 +36,108 @@ docker history <id> : shows the commands run to create the docker image
 docker logs -f
 docker-enter <id> : Enter inside a container. Exit will quit.
 docker exec -it <id> /bin/bash : Execute a bash terminal inside a container (recommended)
+
+
+Dockerfile:
+
+Each run command created a new layer
+docker build -t helloworld:0.1 .  : Builds from dockerfile
+For every run command, a container is created, cmd is run and then container is removed. Image layer is saved.
+Build cache: Docker will not build from scratch if an image which runs the same cmds is already present
+RUN : used at build time, adds layers to image and used to install apps
+CMD : used at runtime, runs commands in containers at launch time. Same as: docker run <args> <CMD>
+Any CMD specified using docker run overrides any CMD instruction given in Dockerfile
+Dockerfile should have only one CMD. (Only last is used)
+CMD can be written in two forms:
+1. Shell form: Commands are expressed as the same way as shell coommands. eg. CMD echo "Hello world"
+cmds get prepended by "/bin/sh" -c"
+can be variables eg: CMD echo $var1
+
+2. Exec Form: (recommended): json array style: ["command", "arg1"]
+containers dont need shell
+avoids string related issues
+No shell features like variables, special scharacters like &&, ||, > etc
+
+
+Entrypoint:
+Another way to run commands in conatainer at start
+Cant be overridden by docker run command
+
+Difference between CMD & ENTRYPOINT:
+CMD can be over ridden by docker run. This can be used to specify default arguments in docker file & for for new arguments
+we can specify them at run time to override the one in dockerfile.
+
+ENTRYPOINT cannot be overridden. This can be used to run a binary every time a start, without giving arguments. (arguments can
+be passed at run time using CMD)
+e.g.: 
+ENTRYPOINT echo
+
+docker run -it hw "Hello world" --> O/P : Hello world
+
+
+ENV:
+run env inside container to know the env vars.
+
+
+How to run different scenarios without changing Dockerfile:
+In Dockerfile use base image and RUN commands
+For ENTRYPOINT use a script. Copy this entrypoint script inside container to run 
+Entrypoint script will take the argument which can be passed using CMD at run time
+CMD will be passed at run time and script will have the logi execute depending on scenario
+Other scripts can also be copied and run depending upon the arg (CMD) passed
+
+Docker Networking:
+When docker daemon starts it creates a docker0 bridge (virtual switch)
+The bridge-utils package installed on host can show details of docker0 with command: brctl show docker0
+OP will show list list of interfaces connected
+Each new container gets attached to one interface
+Use docker inspect cmd to see network details like IP, netmask, gaterway, ports mapped etc of container
+DNS settings are copied from hosts resolv.conf and can be seen in /var/lib/containers/<ID>/resolv.conf
+DNS can be overwritten at docker run command
+resolv.conf inside container is over written at run time by the one at /var/lib/containers/<ID>/
+
+Ports mapped can be seen using docker ps or docker port
+Ports should be exposed in Dockerfile: EXPOSE 80 500 8080
+Capital -P in docker run command will expose all exposed ports in dockerfile to random high number port on host
+
+
+
+Linking Containers:
+Container-to-Container communication only
+The recipient container will link to source container and get all details about networking (IP, protocol, port) and set them in a variable. 
+These can be seen using 'env'. Can be used by app scripts.
+
+
+
+Docker Network:
+New concept, better than linking
+docker network <cmd> (cmd = connect, create, disconnect, inspect, ls, rm)
+Create a network, create containers with name and add these containers to the network
+Containers will communicate with names 
+By default docker creates three networks automatically: 
+-Bridge (default)
+-None
+-Host (no network isolation, container used host network)
+docker network inspect will show all containers attached to the network and their IP's
+Can create multiple networks like one for front end and one for back end to isolate containers.
+
+
+
+Docker volumes:
+docker volume <cmd> (cmd= create, inspect, ls, rm)
+docker volume create --driver=local --name=myvol  : creates named volume which can be reused
+
+Running container inside container: Need to mount the docker socket (driver) from host machine to the container
+docker run -d -p 8000:8000 -v /var/run/docker.sock:/tmp/docker.sock gliderlabs/logspout
+
+logspout: is a docker image which runs as a container and collects and displays all logs of running containers.
+These logs can be sent to a log aggregator like syslog
+
+Vloumes can be mounted in two ways:
+- named volume
+- specific dir path
+
+
+
 
 
