@@ -28,7 +28,7 @@ Setting are stored in .gitconfig in home directory
 
 
 Basic Git Commands:
-- clone, status, add, commit, init, push, pull, checkout, branch, log, diff, merge, remote
+- clone, status, add, commit, init, push, pull, checkout, branch, log, diff, merge, remote, ls-files, checkout, fetch, stash
 
 git clone https://github.com/preetam810/gittest.git
  
@@ -70,7 +70,9 @@ git reset HEAD <file> : to unstage file
 
 git pull : Will pull down from a remote
 
-git add -A
+git add -A : will add files and detect if files are renamed / deleted using shell command
+
+git mv : rename a file. git will automatically stage the changes
 
 
 ___
@@ -90,6 +92,8 @@ Files pushed to remote, git push remote master
 
 git rm : delete tracked file
 
+In Git branches are just lables or pointers.
+
 git branch
 git branch -a
 git checkout <branch>
@@ -100,6 +104,94 @@ git merge master <branch>
 
 
 git log
-git log --oneline --decorate
+git log --oneline --graph --decorate
+git log -- <file>
+git log --follow -- <file> : git history showing renames for that file
+git show <commit-id>
+
+git config --global alias.hist "log --all --graph --decorate --oneline" : create alias "hist"
+
+.gitignore : this file contains files and directories which should be ignored from commiting.
+
+git diff : shows diff between working dir and statging area
+git diff --<file>: hows diff between working dir and statging area only for specific file
+git diff HEAD : shows diff between working dir and last commit 
+git diff --staged HEAD: hows diff between staging area and last commit
+git diff <commit-id> HEAD : shows diff between commit id and last commit
+git diff HEAD HEAD^ : compares last and second last commits
+git diff master origin/master: compare between two branches
+
+
+Happy path merge:
+Fast forward merge is possible when there are no changes made in master branch after new branch was made
+git merge new_branch
+
+To disable fast forward merge capability and preserve branch info and add commit message:
+git merge new_branch --no-ff
+
+
+Automatic merge commit:
+assuming there are differet changes in new_branch and master
+git merge new_branch -m "merging changes fron new_branch"
+
+
+Merge conflicts:
+Automatic merge will fail
+git diff new_branch master
+git merge new_branch master : merge will fail and will move to merging state. open conflicting file where 
+changes will be marked up by git. Resolve the conflicts.
+
+
+Rebasing:
+This moves the entire feature branch to begin on the tip of the master branch, effectively incorporating all of the new commits in master.
+Rebasing is also a kind of merge, but doesnt create a new merge log at the head.
+The major benefit of rebasing is that you get a much cleaner project history.
+rebasing also results in a perfectly linear project history
+git rebase master
+git rebase --abort : incase of conflict
+git rebase --continue : after merging conflicts use this cmd
+git rebase -i master : Interactive rebasing gives you the opportunity to alter commits as they are moved to the new branch. This is even more powerful than an automated rebase, since it offers complete control over the branch’s commit history. 
+
+git fetch : is a non destructive cmd which updates the references from remote repo to local repo
+
+Difference between git pull and fetch:
+git fetch really only downloads new data from a remote repository - but it doesn't integrate any of this new data into your working files.
+git pull, in contrast, is used with a different goal in mind: to update your current HEAD branch with the latest changes from the remote server. This means that pull not only downloads new data; it also directly integrates it into your current working copy files. (merge conflicts can occur)
+
+git pull --rebase origin master : pull the new changes from master and also does rebase 
+
+
+Stashing:
+git stash temporarily shelves (or stashes) changes you've made to your working copy so you can work on something else, and then come back and re-apply them later on.
+
+git stash : Files in staging area (tracked files) are saved.
+git stash -u : saves tracked and untraked files
+
+git stash apply : puts back the saved changes
+git stash list
+git stash drop
+git stash show stash@{1}
+git stash apply stash@{1}
+git stash clear
+
+stashing in to a branch:
+git stash branch new_branch
+
+
+Tagging:
+
+git tag myTag
+git tag --list
+git show myTag
+git tag --delete myTag
+git tag -a v-1.0 : includes tag message
+git diff v-1.0 v-1.1
+
+
+
+
+
+
+
 
 
