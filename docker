@@ -1,4 +1,52 @@
 
+What is Docker and what is its use?
+
+Docker makes is easy to run and install software without worrying about setup or its dependencies or platform
+Its build upon linux containerization technology and uses linux features of namespacing and control groups
+Namespacing: isolates resources like CPU, HD for a process /processess
+Cgroups: Limits amount of resources used per process
+
+
+
+What is a container?
+Container is a instance of an image which has its own isolated set of hardware resourses using linux features of 
+namespacing and control groups
+Container is a grouping of resources specifically assigned to it
+Shares the kernel of the host OS
+
+
+What is a docker image?
+File system snapshot that containes all the dependenies and config required to run a program 
+Contains a startup command which runs the program when image is up
+
+
+Whats the difference between a VM and a container.
+VM: Physical machine > Hypervisor > OS Kernel > Libs > App
+You can run multiple OSs on a single server but that still requires a full blown OS which is often not need to 
+run just one process/app. To run 5 apps we would require 5 VMs
+Thus VM model is not efficient and is a overhear on resources
+Each OS requires individual license
+VM are bloated, containers are light weight
+
+
+Container: Physical machine > OS Kernel > Docker > Libs > App 
+Light weight. Consume less resources like CPU, HD, RAM and provide isolated env to run apps
+
+
+
+
+How can container be used in devops? What problems does it solve.
+
+
+
+
+
+
+
+
+
+_____________________
+
 Common docker container commands for reference:
 
 Jenkins:
@@ -9,11 +57,6 @@ docker run --rm -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/
 
 docker run --rm -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data -e INSTALL4J_ADD_VM_PARAMS="-Xms2g -Xmx2g -XX:MaxDirectMemorySize=1g  -Djava.util.prefs.userRoot=/some-other-dir" sonatype/nexus3
 ____________________
-
-What is Docker and what is its use?
-What is a container?
-Whats the difference between a VM and a container.
-How can container be used in devops? Whtat problems does it solve.
 
 
 
@@ -136,7 +179,6 @@ These logs can be sent to a log aggregator like syslog
 Vloumes can be mounted in two ways:
 - named volume
 - specific dir path
-
 
 
 
