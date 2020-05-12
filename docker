@@ -47,13 +47,21 @@ How can container be used in devops? What problems does it solve.
 
 _____________________
 
-Common docker container commands for reference:
+Jenkins and Nexus in docker containers:
+
 
 Jenkins:
-docker run -u root --rm -d --name jenkins-pb -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock jenkinsci/blueocean
+docker run -u root -d --name jenkins-pb -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -v /usr/bin/docker:/usr/bin/docker -v /usr/bin/zip:/usr/bin/zip jenkins/jenkins
+
+Imp: following links expalin there is either need to install docker or mount docker dir:
+https://tutorials.releaseworksacademy.com/learn/the-simple-way-to-run-docker-in-docker-for-ci
+https://forums.docker.com/t/using-docker-in-a-dockerized-jenkins-container/322
+[
+docker run -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):$(which docker) ubuntu bash
+]
 
 Nexus:
-docker run --rm -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
+docker run -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data sonatype/nexus3
 
 docker run --rm -d -p 8081:8081 --name nexus -v nexus-data:/nexus-data -e INSTALL4J_ADD_VM_PARAMS="-Xms2g -Xmx2g -XX:MaxDirectMemorySize=1g  -Djava.util.prefs.userRoot=/some-other-dir" sonatype/nexus3
 ____________________
